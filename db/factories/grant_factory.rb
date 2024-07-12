@@ -1,5 +1,10 @@
 # frozen_string_literal: true
 
+def count_words(section_title, section_text)
+  str = "#{section_title} #{section_text}"
+  str.strip.split(/\s+/).length
+end
+
 class GrantFactory
   GrantFactory::SECTIONS_TEXT = [
     <<-TEXT,
@@ -148,7 +153,23 @@ class GrantFactory
     TEXT
   ].freeze
 
+  GrantFactory::SECTIONS_TITLE = [
+    'Mission',
+    'What We Do',
+    'Community Engagement and Empowerment Programs',
+    'Case Management Program',
+    'Assistance for Families With Children',
+    'Adult Education Guidance Program',
+    'Legal Services'
+  ].freeze
+
   def self.section_text
     GrantFactory::SECTIONS_TEXT.sample
+  end
+
+  def self.section_info
+    section_text = GrantFactory::SECTIONS_TEXT.sample
+    section_title = GrantFactory::SECTIONS_TITLE.sample
+    { text: section_text, title: section_title, wordcount: count_words(section_title, section_text) }
   end
 end
